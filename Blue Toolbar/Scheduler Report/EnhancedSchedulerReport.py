@@ -37,6 +37,13 @@
 # - Bug Fix to show "sign-up" link for Partial Filled
 # - Bug Fix to pull "Required" from correct table
 #
+# - Bug Fix by: Ryanne Caldwell (8/20/2025)
+# - TimeSlotTeams table was being joined on TimeSlotID only causing it to show each team multiple times once for each different number of people needed. Added AND tst.TimeSlotTeamID = tsmt.TimeSlotTeamId
+#
+#To add this to the Bluetoolbar, navigate to open CustomReport under special content 
+# / text and add in the following line.  Make sure to adjust report name to what
+# you called the Python report
+#
 #To add this to the Bluetoolbar, navigate to open CustomReport under special content 
 # / text and add in the following line.  Make sure to adjust report name to what
 # you called the Python report
@@ -240,7 +247,7 @@ SELECT
 FROM TimeSlotMeetingTeams tsmt 
 LEFT JOIN TimeSlotMeetings tsm ON tsmt.TimeSlotMeetingId = tsm.TimeSlotMeetingId
 LEFT JOIN TimeSlots ts ON tsm.TimeSlotId = ts.TimeSlotId
-LEFT JOIN TimeSlotTeams tst ON tsm.TimeSlotId = tst.TimeSlotId
+LEFT JOIN TimeSlotTeams tst ON tsm.TimeSlotId = tst.TimeSlotId AND tst.TimeSlotTeamID = tsmt.TimeSlotTeamId
 LEFT JOIN TimeSlotMeetingTeamSubGroups tssg ON tssg.TimeSlotMeetingTeamId = tsmt.TimeSlotMeetingTeamId
 LEFT JOIN TimeSlotTeamSubGroups tstSG ON tstSG.TimeSlotTeamSubGroupId = tssg.TimeSlotTeamSubGroupId
 LEFT JOIN Meetings m ON tsm.MeetingId = m.MeetingId
